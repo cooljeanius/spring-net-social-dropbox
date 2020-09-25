@@ -55,7 +55,7 @@ namespace Spring.Social.Dropbox.Api
         /// Asynchronously retrieves the authenticated user's Dropbox profile details.
         /// </summary>
         /// <returns>
-        /// A <code>Task</code> that represents the asynchronous operation that can return 
+        /// A 'Task' that represents the asynchronous operation that can return 
         /// a <see cref="DropboxProfile"/> object representing the user's profile.
         /// </returns>
         /// <exception cref="DropboxApiException">If there is an error while communicating with Dropbox.</exception>
@@ -66,7 +66,7 @@ namespace Spring.Social.Dropbox.Api
         /// </summary>
         /// <param name="path">The Dropbox path to the new folder to create relative to root.</param>
         /// <returns>
-        /// A <code>Task</code> that represents the asynchronous operation that can return 
+        /// A 'Task' that represents the asynchronous operation that can return 
         /// a metadata <see cref="Entry"/> for the new folder.
         /// </returns>
         /// <exception cref="DropboxApiException">If there is an error while communicating with Dropbox.</exception>
@@ -77,7 +77,7 @@ namespace Spring.Social.Dropbox.Api
         /// </summary>
         /// <param name="path">The Dropbox path to the file or folder to be deleted relative to root.</param>
         /// <returns>
-        /// A <code>Task</code> that represents the asynchronous operation that can return 
+        /// A 'Task' that represents the asynchronous operation that can return 
         /// a metadata <see cref="Entry"/> for the deleted file or folder.
         /// </returns>
         /// <exception cref="DropboxApiException">If there is an error while communicating with Dropbox.</exception>
@@ -89,11 +89,26 @@ namespace Spring.Social.Dropbox.Api
         /// <param name="fromPath">The path to the file or folder to be copied from, relative to root.</param>
         /// <param name="toPath">The destination path, including the new name for the file or folder, relative to root.</param>
         /// <returns>
-        /// A <code>Task</code> that represents the asynchronous operation that can return 
+        /// A 'Task' that represents the asynchronous operation that can return 
         /// a metadata <see cref="Entry"/> for the moved file or folder.
         /// </returns>
         /// <exception cref="DropboxApiException">If there is an error while communicating with Dropbox.</exception>
         Task<Entry> MoveAsync(string fromPath, string toPath);
+
+        /// <summary>
+        /// Asynchronously creates a reference to another user's Dropbox file that can be used to 
+        /// copy files directly between two Dropbox accounts (with permission from both users) 
+        /// using the <see cref="M:CopyFileRefAsync"/> method.
+        /// No need to download and re-upload files.
+        /// </summary>
+        /// <param name="path">The path to the file you want a reference.</param>
+        /// <returns>
+        /// A 'Task' that represents the asynchronous operation that can return 
+        /// a <see cref="FileRef">reference to another user's Dropbox file</see>.
+        /// </returns>
+        /// <exception cref="DropboxApiException">If there is an error while communicating with Dropbox.</exception>
+        /// <seealso cref="M:CopyFileRefAsync"/>
+        Task<FileRef> CreateFileRefAsync(string path);
 
         /// <summary>
         /// Asynchronously copies a file or folder to a new location.
@@ -101,11 +116,27 @@ namespace Spring.Social.Dropbox.Api
         /// <param name="fromPath">The path to the file or folder to be copied from, relative to root.</param>
         /// <param name="toPath">The destination path, including the new name for the file or folder, relative to root.</param>
         /// <returns>
-        /// A <code>Task</code> that represents the asynchronous operation that can return 
+        /// A 'Task' that represents the asynchronous operation that can return 
         /// a metadata <see cref="Entry"/> for the moved file or folder.
         /// </returns>
         /// <exception cref="DropboxApiException">If there is an error while communicating with Dropbox.</exception>
         Task<Entry> CopyAsync(string fromPath, string toPath);
+
+        /// <summary>
+        /// Asynchronously copies another user's Dropbox file without the need to download and re-upload the file.
+        /// </summary>
+        /// <param name="fromFileRef">
+        /// The reference to another user's Dropbox file to be copied from, 
+        /// obtained by calling the <see cref="M:CreateFileRefAsync"/> method.
+        /// </param>
+        /// <param name="toPath">The destination file path, including the new name for the file, relative to root.</param>
+        /// <returns>
+        /// A 'Task' that represents the asynchronous operation that can return 
+        /// a metadata <see cref="Entry"/> for the copied file.
+        /// </returns>
+        /// <exception cref="DropboxApiException">If there is an error while communicating with Dropbox.</exception>
+        /// <seealso cref="M:CreateFileRefAsync"/>
+        Task<Entry> CopyFileRefAsync(string fromFileRef, string toPath);
 
         /// <summary>
         /// Asynchronously uploads a file.
@@ -116,7 +147,7 @@ namespace Spring.Social.Dropbox.Api
         /// This parameter should not point to a folder.
         /// </param>
         /// <returns>
-        /// A <code>Task</code> that represents the asynchronous operation that can return 
+        /// A 'Task' that represents the asynchronous operation that can return 
         /// a metadata <see cref="Entry"/> for the uploaded file.
         /// </returns>
         /// <exception cref="DropboxApiException">If there is an error while communicating with Dropbox.</exception>
@@ -145,7 +176,7 @@ namespace Spring.Social.Dropbox.Api
         /// Use <see cref="P:CancellationToken.None"/> for an empty <see cref="CancellationToken"/> value.
         /// </param>
         /// <returns>
-        /// A <code>Task</code> that represents the asynchronous operation that can return 
+        /// A 'Task' that represents the asynchronous operation that can return 
         /// a metadata <see cref="Entry"/> for the uploaded file.
         /// </returns>
         /// <exception cref="DropboxApiException">If there is an error while communicating with Dropbox.</exception>
@@ -156,7 +187,7 @@ namespace Spring.Social.Dropbox.Api
         /// </summary>
         /// <param name="path">The Dropbox path to the file you want to retrieve, relative to root.</param>
         /// <returns>
-        /// A <code>Task</code> that represents the asynchronous operation that can return 
+        /// A 'Task' that represents the asynchronous operation that can return 
         /// a <see cref="DropboxFile"/> object containing the file's content and metadata.
         /// </returns>
         /// <exception cref="DropboxApiException">If there is an error while communicating with Dropbox.</exception>
@@ -175,18 +206,74 @@ namespace Spring.Social.Dropbox.Api
         /// Use <see cref="P:CancellationToken.None"/> for an empty <see cref="CancellationToken"/> value.
         /// </param>
         /// <returns>
-        /// A <code>Task</code> that represents the asynchronous operation that can return 
+        /// A 'Task' that represents the asynchronous operation that can return 
         /// a <see cref="DropboxFile"/> object containing the file's content and metadata.
         /// </returns>
         /// <exception cref="DropboxApiException">If there is an error while communicating with Dropbox.</exception>
         Task<DropboxFile> DownloadFileAsync(string path, string revision, CancellationToken cancellationToken);
 
         /// <summary>
+        /// Asynchronously downloads part of a file and its metadata.
+        /// </summary>
+        /// <param name="path">The Dropbox path to the file you want to retrieve, relative to root.</param>
+        /// <param name="startOffset">The zero-based starting position of the part file.</param>
+        /// <param name="length">The number of bytes of the part file.</param>
+        /// <returns>
+        /// A 'Task' that represents the asynchronous operation that can return 
+        /// a <see cref="DropboxFile"/> object containing the part of file's content and metadata.
+        /// </returns>
+        /// <exception cref="DropboxApiException">If there is an error while communicating with Dropbox.</exception>
+        Task<DropboxFile> DownloadPartialFileAsync(string path, long startOffset, long length);
+
+        /// <summary>
+        /// Asynchronously downloads part of a file and its metadata.
+        /// </summary>
+        /// <param name="path">The Dropbox path to the file you want to retrieve, relative to root.</param>
+        /// <param name="startOffset">The zero-based starting position of the part file.</param>
+        /// <param name="length">The number of bytes of the part file.</param>
+        /// <param name="revision">
+        /// The revision of the file to retrieve, or <see langword="null"/> for the latest version.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// The <see cref="CancellationToken"/> that will be assigned to the task. 
+        /// <para/>
+        /// Use <see cref="P:CancellationToken.None"/> for an empty <see cref="CancellationToken"/> value.
+        /// </param>
+        /// <returns>
+        /// A 'Task' that represents the asynchronous operation that can return 
+        /// a <see cref="DropboxFile"/> object containing the part of file's content and metadata.
+        /// </returns>
+        /// <exception cref="DropboxApiException">If there is an error while communicating with Dropbox.</exception>
+        Task<DropboxFile> DownloadPartialFileAsync(string path, long startOffset, long length, string revision, CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Asynchronously keeps up with changes to files and folders in a user's Dropbox. 
+        /// <para/>
+        /// You can periodically call this method to get a list of metadatas, 
+        /// which are instructions on how to update your local state to match the server's state.
+        /// </summary>
+        /// <param name="cursor">
+        /// A value that is used to keep track of your current state. 
+        /// <para/>
+        /// On the first call, you should pass in <see langword="null"/>. 
+        /// On subsequent calls, pass in the cursor value returned by the previous call.
+        /// </param>
+        /// <returns>
+        /// A 'Task' that represents the asynchronous operation that can return 
+        /// a single <see cref="DeltaPage">delta page</see> of results. 
+        /// <para/>
+        /// The <see cref="DeltaPage"/>'s HasMore property will tell you whether the server has more pages of results to return. 
+        /// If the server doesn't have more results, wait for at least five minutes (preferably longer) and poll again.
+        /// </returns>
+        /// <exception cref="DropboxApiException">If there is an error while communicating with Dropbox.</exception>
+        Task<DeltaPage> DeltaAsync(string cursor);
+
+        /// <summary>
         /// Asynchronously retrieves file or folder metadata.
         /// </summary>
         /// <param name="path">The Dropbox path to the file or folder, relative to root.</param>
         /// <returns>
-        /// A <code>Task</code> that represents the asynchronous operation that can return 
+        /// A 'Task' that represents the asynchronous operation that can return 
         /// a metadata <see cref="Entry"/> for the file or folder.
         /// </returns>
         /// <exception cref="DropboxApiException">If there is an error while communicating with Dropbox.</exception>
@@ -199,7 +286,7 @@ namespace Spring.Social.Dropbox.Api
         /// <param name="path">The Dropbox path to the file or folder, relative to root.</param>
         /// <param name="parameters">The parameters for retrieving file and folder metadata.</param>
         /// <returns>
-        /// A <code>Task</code> that represents the asynchronous operation that can return 
+        /// A 'Task' that represents the asynchronous operation that can return 
         /// a metadata <see cref="Entry"/> for the file or folder.
         /// </returns>
         /// <exception cref="DropboxApiException">If there is an error while communicating with Dropbox.</exception>
@@ -210,7 +297,7 @@ namespace Spring.Social.Dropbox.Api
         /// </summary>
         /// <param name="path">The Dropbox path to the file, relative to root.</param>
         /// <returns>
-        /// A <code>Task</code> that represents the asynchronous operation that can return 
+        /// A 'Task' that represents the asynchronous operation that can return 
         /// a list of metadata <see cref="Entry">entries</see>.
         /// </returns>
         /// <exception cref="DropboxApiException">If there is an error while communicating with Dropbox.</exception>
@@ -224,7 +311,7 @@ namespace Spring.Social.Dropbox.Api
         /// The maximum numbers of revisions to retrieve. Default is 10, Max is 1,000.
         /// </param>
         /// <returns>
-        /// A <code>Task</code> that represents the asynchronous operation that can return 
+        /// A 'Task' that represents the asynchronous operation that can return 
         /// a list of metadata <see cref="Entry">entries</see>.
         /// </returns>
         /// <exception cref="DropboxApiException">If there is an error while communicating with Dropbox.</exception>
@@ -236,7 +323,7 @@ namespace Spring.Social.Dropbox.Api
         /// <param name="path">The Dropbox path to the file, relative to root.</param>
         /// <param name="revision">The revision of the file to restore.</param>
         /// <returns>
-        /// A <code>Task</code> that represents the asynchronous operation that can return 
+        /// A 'Task' that represents the asynchronous operation that can return 
         /// a metadata <see cref="Entry"/> for the restored file. 
         /// </returns>
         /// <exception cref="DropboxApiException">If there is an error while communicating with Dropbox.</exception>
@@ -248,7 +335,7 @@ namespace Spring.Social.Dropbox.Api
         /// <param name="path">The Dropbox path to the folder you want to search from, relative to root.</param>
         /// <param name="query">The search string. Must be at least three characters long.</param>
         /// <returns>
-        /// A <code>Task</code> that represents the asynchronous operation that can return 
+        /// A 'Task' that represents the asynchronous operation that can return 
         /// a list of metadata <see cref="Entry">entries</see> for any matching files and folders.
         /// </returns>
         /// <exception cref="DropboxApiException">If there is an error while communicating with Dropbox.</exception>
@@ -266,7 +353,7 @@ namespace Spring.Social.Dropbox.Api
         /// If <see langword="true"/>, then files and folders that have been deleted will also be included in the search.
         /// </param>
         /// <returns>
-        /// A <code>Task</code> that represents the asynchronous operation that can return 
+        /// A 'Task' that represents the asynchronous operation that can return 
         /// a list of metadata <see cref="Entry">entries</see> for any matching files and folders.
         /// </returns>
         /// <exception cref="DropboxApiException">If there is an error while communicating with Dropbox.</exception>
@@ -279,7 +366,7 @@ namespace Spring.Social.Dropbox.Api
         /// The Dropbox path to the file or folder you want a sharable link to, relative to root.
         /// </param>
         /// <returns>
-        /// A <code>Task</code> that represents the asynchronous operation that can return 
+        /// A 'Task' that represents the asynchronous operation that can return 
         /// a shareable link to the file or folder.
         /// </returns>
         /// <exception cref="DropboxApiException">If there is an error while communicating with Dropbox.</exception>
@@ -292,7 +379,7 @@ namespace Spring.Social.Dropbox.Api
         /// The Dropbox path to the media file you want a direct link to, relative to root.
         /// </param>
         /// <returns>
-        /// A <code>Task</code> that represents the asynchronous operation that can return 
+        /// A 'Task' that represents the asynchronous operation that can return 
         /// a direct link to the media file.
         /// </returns>
         /// <exception cref="DropboxApiException">If there is an error while communicating with Dropbox.</exception>
@@ -307,7 +394,7 @@ namespace Spring.Social.Dropbox.Api
         /// <param name="format">The image format of the thumbnail to download.</param>
         /// <param name="size">The size of the thumbnail to download.</param>
         /// <returns>
-        /// A <code>Task</code> that represents the asynchronous operation that can return 
+        /// A 'Task' that represents the asynchronous operation that can return 
         /// a <see cref="DropboxFile"/> object containing the thumbnail's content and metadata.
         /// </returns>
         /// <exception cref="DropboxApiException">If there is an error while communicating with Dropbox.</exception>
@@ -353,6 +440,20 @@ namespace Spring.Social.Dropbox.Api
         Entry Move(string fromPath, string toPath);
 
         /// <summary>
+        /// Creates a reference to another user's Dropbox file that can be used to 
+        /// copy files directly between two Dropbox accounts (with permission from both users) 
+        /// using the <see cref="M:CopyFileRef"/> method.
+        /// No need to download and re-upload files.
+        /// </summary>
+        /// <param name="path">The path to the file you want a reference.</param>
+        /// <returns>
+        /// A <see cref="FileRef">reference to another user's Dropbox file</see>.
+        /// </returns>
+        /// <exception cref="DropboxApiException">If there is an error while communicating with Dropbox.</exception>
+        /// <seealso cref="M:CopyFileRef"/>
+        FileRef CreateFileRef(string path);
+
+        /// <summary>
         /// Copies a file or folder to a new location.
         /// </summary>
         /// <param name="fromPath">The path to the file or folder to be copied from, relative to root.</param>
@@ -362,6 +463,21 @@ namespace Spring.Social.Dropbox.Api
         /// </returns>
         /// <exception cref="DropboxApiException">If there is an error while communicating with Dropbox.</exception>
         Entry Copy(string fromPath, string toPath);
+
+        /// <summary>
+        /// Copies another user's Dropbox file without the need to download and re-upload the file.
+        /// </summary>
+        /// <param name="fromFileRef">
+        /// The reference to another user's Dropbox file to be copied from, 
+        /// obtained by calling the <see cref="M:CreateFileRef"/> method.
+        /// </param>
+        /// <param name="toPath">The destination file path, including the new name for the file, relative to root.</param>
+        /// <returns>
+        /// A metadata <see cref="Entry"/> for the copied file.
+        /// </returns>
+        /// <exception cref="DropboxApiException">If there is an error while communicating with Dropbox.</exception>
+        /// <seealso cref="M:CreateFileRef"/>
+        Entry CopyFileRef(string fromFileRef, string toPath);
 
         /// <summary>
         /// Uploads a file.
@@ -418,6 +534,54 @@ namespace Spring.Social.Dropbox.Api
         /// </returns>
         /// <exception cref="DropboxApiException">If there is an error while communicating with Dropbox.</exception>
         DropboxFile DownloadFile(string path, string revision);
+
+        /// <summary>
+        /// Downloads part of a file and its metadata.
+        /// </summary>
+        /// <param name="path">The Dropbox path to the file you want to retrieve, relative to root.</param>
+        /// <param name="startOffset">The zero-based starting position of the part file.</param>
+        /// <param name="length">The number of bytes of the part file.</param>
+        /// <returns>
+        /// A <see cref="DropboxFile"/> object containing the part of file's content and metadata.
+        /// </returns>
+        /// <exception cref="DropboxApiException">If there is an error while communicating with Dropbox.</exception>
+        DropboxFile DownloadPartialFile(string path, long startOffset, long length);
+
+        /// <summary>
+        /// Downloads part of a file and its metadata.
+        /// </summary>
+        /// <param name="path">The Dropbox path to the file you want to retrieve, relative to root.</param>
+        /// <param name="startOffset">The zero-based starting position of the part file.</param>
+        /// <param name="length">The number of bytes of the part file.</param>
+        /// <param name="revision">
+        /// The revision of the file to retrieve, or <see langword="null"/> for the latest version.
+        /// </param>
+        /// <returns>
+        /// A <see cref="DropboxFile"/> object containing the part of file's content and metadata.
+        /// </returns>
+        /// <exception cref="DropboxApiException">If there is an error while communicating with Dropbox.</exception>
+        DropboxFile DownloadPartialFile(string path, long startOffset, long length, string revision);
+
+        /// <summary>
+        /// Keeps up with changes to files and folders in a user's Dropbox. 
+        /// <para/>
+        /// You can periodically call this method to get a list of metadatas, 
+        /// which are instructions on how to update your local state to match the server's state.
+        /// </summary>
+        /// <param name="cursor">
+        /// A value that is used to keep track of your current state. 
+        /// <para/>
+        /// On the first call, you should pass in <see langword="null"/>. 
+        /// On subsequent calls, pass in the cursor value returned by the previous call.
+        /// </param>
+        /// <returns>
+        /// A single <see cref="DeltaPage">delta page</see> of results. 
+        /// <para/>
+        /// The <see cref="DeltaPage"/>'s HasMore property will tell you whether the server has more pages of results to return. 
+        /// If the server doesn't have more results, wait for at least five minutes (preferably longer) and poll again.
+        /// </returns>
+        /// <exception cref="DropboxApiException">If there is an error while communicating with Dropbox.</exception>
+        DeltaPage Delta(string cursor);
 
         /// <summary>
         /// Retrieves file or folder metadata.
@@ -546,7 +710,7 @@ namespace Spring.Social.Dropbox.Api
         /// Asynchronously retrieves the authenticated user's Dropbox profile details.
         /// </summary>
         /// <param name="operationCompleted">
-        /// The <code>Action&lt;&gt;</code> to perform when the asynchronous request completes. 
+        /// The 'Action&lt;&gt;' to perform when the asynchronous request completes. 
         /// Provides a <see cref="DropboxProfile"/>object representing the user's profile.
         /// </param>
         /// <returns>
@@ -560,7 +724,7 @@ namespace Spring.Social.Dropbox.Api
         /// </summary>
         /// <param name="path">The Dropbox path to the new folder to create relative to root.</param>
         /// <param name="operationCompleted">
-        /// The <code>Action&lt;&gt;</code> to perform when the asynchronous request completes. 
+        /// The 'Action&lt;&gt;' to perform when the asynchronous request completes. 
         /// Provides a metadata <see cref="Entry"/> for the new folder.
         /// </param>
         /// <returns>
@@ -574,7 +738,7 @@ namespace Spring.Social.Dropbox.Api
         /// </summary>
         /// <param name="path">The Dropbox path to the file or folder to be deleted relative to root.</param>
         /// <param name="operationCompleted">
-        /// The <code>Action&lt;&gt;</code> to perform when the asynchronous request completes. 
+        /// The 'Action&lt;&gt;' to perform when the asynchronous request completes. 
         /// Provides a metadata <see cref="Entry"/> for the deleted file or folder.
         /// </param>
         /// <returns>
@@ -589,7 +753,7 @@ namespace Spring.Social.Dropbox.Api
         /// <param name="fromPath">The path to the file or folder to be copied from, relative to root.</param>
         /// <param name="toPath">The destination path, including the new name for the file or folder, relative to root.</param>
         /// <param name="operationCompleted">
-        /// The <code>Action&lt;&gt;</code> to perform when the asynchronous request completes. 
+        /// The 'Action&lt;&gt;' to perform when the asynchronous request completes. 
         /// Provides a metadata <see cref="Entry"/> for the moved file or folder.
         /// </param>
         /// <returns>
@@ -599,12 +763,30 @@ namespace Spring.Social.Dropbox.Api
         RestOperationCanceler MoveAsync(string fromPath, string toPath, Action<RestOperationCompletedEventArgs<Entry>> operationCompleted);
 
         /// <summary>
+        /// Asynchronously creates a reference to another user's Dropbox file that can be used to 
+        /// copy files directly between two Dropbox accounts (with permission from both users) 
+        /// using the <see cref="M:CopyFileRefAsync"/> method.
+        /// No need to download and re-upload files.
+        /// </summary>
+        /// <param name="path">The path to the file you want a reference.</param>
+        /// <param name="operationCompleted">
+        /// The 'Action&lt;&gt;' to perform when the asynchronous request completes. 
+        /// Provides a <see cref="FileRef">reference to another user's Dropbox file</see>.
+        /// </param>
+        /// <returns>
+        /// A <see cref="RestOperationCanceler"/> instance that allows to cancel the asynchronous operation.
+        /// </returns>
+        /// <exception cref="DropboxApiException">If there is an error while communicating with Dropbox.</exception>
+        /// <seealso cref="M:CopyFileRefAsync"/>
+        RestOperationCanceler CreateFileRefAsync(string path, Action<RestOperationCompletedEventArgs<FileRef>> operationCompleted);
+
+        /// <summary>
         /// Asynchronously copies a file or folder to a new location.
         /// </summary>
         /// <param name="fromPath">The path to the file or folder to be copied from, relative to root.</param>
         /// <param name="toPath">The destination path, including the new name for the file or folder, relative to root.</param>
         /// <param name="operationCompleted">
-        /// The <code>Action&lt;&gt;</code> to perform when the asynchronous request completes. 
+        /// The 'Action&lt;&gt;' to perform when the asynchronous request completes. 
         /// Provides a metadata <see cref="Entry"/> for the moved file or folder.
         /// </param>
         /// <returns>
@@ -612,6 +794,25 @@ namespace Spring.Social.Dropbox.Api
         /// </returns>
         /// <exception cref="DropboxApiException">If there is an error while communicating with Dropbox.</exception>
         RestOperationCanceler CopyAsync(string fromPath, string toPath, Action<RestOperationCompletedEventArgs<Entry>> operationCompleted);
+
+        /// <summary>
+        /// Asynchronously copies another user's Dropbox file without the need to download and re-upload the file.
+        /// </summary>
+        /// <param name="fromFileRef">
+        /// The reference to another user's Dropbox file to be copied from, 
+        /// obtained by calling the <see cref="M:CreateFileRefAsync"/> method.
+        /// </param>
+        /// <param name="toPath">The destination file path, including the new name for the file, relative to root.</param>
+        /// <param name="operationCompleted">
+        /// The 'Action&lt;&gt;' to perform when the asynchronous request completes. 
+        /// Provides a metadata <see cref="Entry"/> for the copied file.
+        /// </param>
+        /// <returns>
+        /// A <see cref="RestOperationCanceler"/> instance that allows to cancel the asynchronous operation.
+        /// </returns>
+        /// <exception cref="DropboxApiException">If there is an error while communicating with Dropbox.</exception>
+        /// <seealso cref="M:CreateFileRefAsync"/>
+        RestOperationCanceler CopyFileRefAsync(string fromFileRef, string toPath, Action<RestOperationCompletedEventArgs<Entry>> operationCompleted);
 
         /// <summary>
         /// Asynchronously uploads a file.
@@ -622,7 +823,7 @@ namespace Spring.Social.Dropbox.Api
         /// This parameter should not point to a folder.
         /// </param>
         /// <param name="operationCompleted">
-        /// The <code>Action&lt;&gt;</code> to perform when the asynchronous request completes. 
+        /// The 'Action&lt;&gt;' to perform when the asynchronous request completes. 
         /// Provides a metadata <see cref="Entry"/> for the uploaded file.
         /// </param>
         /// <returns>
@@ -649,7 +850,7 @@ namespace Spring.Social.Dropbox.Api
         /// If <paramref name="revision"/> matches the latest version of the file on the user's Dropbox, that file will be replaced.
         /// </param>
         /// <param name="operationCompleted">
-        /// The <code>Action&lt;&gt;</code> to perform when the asynchronous request completes. 
+        /// The 'Action&lt;&gt;' to perform when the asynchronous request completes. 
         /// Provides a metadata <see cref="Entry"/> for the uploaded file.
         /// </param>
         /// <returns>
@@ -663,7 +864,7 @@ namespace Spring.Social.Dropbox.Api
         /// </summary>
         /// <param name="path">The Dropbox path to the file you want to retrieve, relative to root.</param>
         /// <param name="operationCompleted">
-        /// The <code>Action&lt;&gt;</code> to perform when the asynchronous request completes. 
+        /// The 'Action&lt;&gt;' to perform when the asynchronous request completes. 
         /// Provides a <see cref="DropboxFile"/> object containing the file's content and metadata.
         /// </param>
         /// <returns>
@@ -680,7 +881,7 @@ namespace Spring.Social.Dropbox.Api
         /// The revision of the file to retrieve, or <see langword="null"/> for the latest version.
         /// </param>
         /// <param name="operationCompleted">
-        /// The <code>Action&lt;&gt;</code> to perform when the asynchronous request completes. 
+        /// The 'Action&lt;&gt;' to perform when the asynchronous request completes. 
         /// Provides a <see cref="DropboxFile"/> object containing the file's content and metadata.
         /// </param>
         /// <returns>
@@ -690,11 +891,71 @@ namespace Spring.Social.Dropbox.Api
         RestOperationCanceler DownloadFileAsync(string path, string revision, Action<RestOperationCompletedEventArgs<DropboxFile>> operationCompleted);
 
         /// <summary>
+        /// Asynchronously downloads part of a file and its metadata.
+        /// </summary>
+        /// <param name="path">The Dropbox path to the file you want to retrieve, relative to root.</param>
+        /// <param name="startOffset">The zero-based starting position of the part file.</param>
+        /// <param name="length">The number of bytes of the part file.</param>
+        /// <param name="operationCompleted">
+        /// The 'Action&lt;&gt;' to perform when the asynchronous request completes. 
+        /// Provides <see cref="DropboxFile"/> object containing the part of file's content and metadata.
+        /// </param>
+        /// <returns>
+        /// A <see cref="RestOperationCanceler"/> instance that allows to cancel the asynchronous operation.
+        /// </returns>
+        /// <exception cref="DropboxApiException">If there is an error while communicating with Dropbox.</exception>
+        RestOperationCanceler DownloadPartialFileAsync(string path, long startOffset, long length, Action<RestOperationCompletedEventArgs<DropboxFile>> operationCompleted);
+
+        /// <summary>
+        /// Asynchronously downloads part of a file and its metadata.
+        /// </summary>
+        /// <param name="path">The Dropbox path to the file you want to retrieve, relative to root.</param>
+        /// <param name="startOffset">The zero-based starting position of the part file.</param>
+        /// <param name="length">The number of bytes of the part file.</param>
+        /// <param name="revision">
+        /// The revision of the file to retrieve, or <see langword="null"/> for the latest version.
+        /// </param>
+        /// <param name="operationCompleted">
+        /// The 'Action&lt;&gt;' to perform when the asynchronous request completes. 
+        /// Provides <see cref="DropboxFile"/> object containing the part of file's content and metadata.
+        /// </param>
+        /// <returns>
+        /// A <see cref="RestOperationCanceler"/> instance that allows to cancel the asynchronous operation.
+        /// </returns>
+        /// <exception cref="DropboxApiException">If there is an error while communicating with Dropbox.</exception>
+        RestOperationCanceler DownloadPartialFileAsync(string path, long startOffset, long length, string revision, Action<RestOperationCompletedEventArgs<DropboxFile>> operationCompleted);
+
+        /// <summary>
+        /// Asynchronously keeps up with changes to files and folders in a user's Dropbox. 
+        /// <para/>
+        /// You can periodically call this method to get a list of metadatas, 
+        /// which are instructions on how to update your local state to match the server's state.
+        /// </summary>
+        /// <param name="cursor">
+        /// A value that is used to keep track of your current state. 
+        /// <para/>
+        /// On the first call, you should pass in <see langword="null"/>. 
+        /// On subsequent calls, pass in the cursor value returned by the previous call.
+        /// </param>
+        /// <param name="operationCompleted">
+        /// The 'Action&lt;&gt;' to perform when the asynchronous request completes. 
+        /// Provides a single <see cref="DeltaPage">delta page</see> of results. 
+        /// <para/>
+        /// The <see cref="DeltaPage"/>'s HasMore property will tell you whether the server has more pages of results to return. 
+        /// If the server doesn't have more results, wait for at least five minutes (preferably longer) and poll again.
+        /// </param>
+        /// <returns>
+        /// A <see cref="RestOperationCanceler"/> instance that allows to cancel the asynchronous operation.
+        /// </returns>
+        /// <exception cref="DropboxApiException">If there is an error while communicating with Dropbox.</exception>
+        RestOperationCanceler DeltaAsync(string cursor, Action<RestOperationCompletedEventArgs<DeltaPage>> operationCompleted);
+
+        /// <summary>
         /// Asynchronously retrieves file or folder metadata.
         /// </summary>
         /// <param name="path">The Dropbox path to the file or folder, relative to root.</param>
         /// <param name="operationCompleted">
-        /// The <code>Action&lt;&gt;</code> to perform when the asynchronous request completes. 
+        /// The 'Action&lt;&gt;' to perform when the asynchronous request completes. 
         /// Provides a metadata <see cref="Entry"/> for the file or folder.
         /// </param>
         /// <returns>
@@ -710,7 +971,7 @@ namespace Spring.Social.Dropbox.Api
         /// <param name="path">The Dropbox path to the file or folder, relative to root.</param>
         /// <param name="parameters">The parameters for retrieving file and folder metadata.</param>
         /// <param name="operationCompleted">
-        /// The <code>Action&lt;&gt;</code> to perform when the asynchronous request completes. 
+        /// The 'Action&lt;&gt;' to perform when the asynchronous request completes. 
         /// Provides a metadata <see cref="Entry"/> for the file or folder.
         /// </param>
         /// <returns>
@@ -724,7 +985,7 @@ namespace Spring.Social.Dropbox.Api
         /// </summary>
         /// <param name="path">The Dropbox path to the file, relative to root.</param>
         /// <param name="operationCompleted">
-        /// The <code>Action&lt;&gt;</code> to perform when the asynchronous request completes. 
+        /// The 'Action&lt;&gt;' to perform when the asynchronous request completes. 
         /// Provides a list of metadata <see cref="Entry">entries</see>.
         /// </param>
         /// <returns>
@@ -741,7 +1002,7 @@ namespace Spring.Social.Dropbox.Api
         /// The maximum numbers of revisions to retrieve. Default is 10, Max is 1,000.
         /// </param>
         /// <param name="operationCompleted">
-        /// The <code>Action&lt;&gt;</code> to perform when the asynchronous request completes. 
+        /// The 'Action&lt;&gt;' to perform when the asynchronous request completes. 
         /// Provides a list of metadata <see cref="Entry">entries</see>.
         /// </param>
         /// <returns>
@@ -756,7 +1017,7 @@ namespace Spring.Social.Dropbox.Api
         /// <param name="path">The Dropbox path to the file, relative to root.</param>
         /// <param name="revision">The revision of the file to restore.</param>
         /// <param name="operationCompleted">
-        /// The <code>Action&lt;&gt;</code> to perform when the asynchronous request completes. 
+        /// The 'Action&lt;&gt;' to perform when the asynchronous request completes. 
         /// Provides a metadata <see cref="Entry"/> for the restored file. 
         /// </param>
         /// <returns>
@@ -771,7 +1032,7 @@ namespace Spring.Social.Dropbox.Api
         /// <param name="path">The Dropbox path to the folder you want to search from, relative to root.</param>
         /// <param name="query">The search string. Must be at least three characters long.</param>
         /// <param name="operationCompleted">
-        /// The <code>Action&lt;&gt;</code> to perform when the asynchronous request completes. 
+        /// The 'Action&lt;&gt;' to perform when the asynchronous request completes. 
         /// Provides a list of metadata <see cref="Entry">entries</see> for any matching files and folders.
         /// </param>
         /// <returns>
@@ -792,7 +1053,7 @@ namespace Spring.Social.Dropbox.Api
         /// If <see langword="true"/>, then files and folders that have been deleted will also be included in the search.
         /// </param>
         /// <param name="operationCompleted">
-        /// The <code>Action&lt;&gt;</code> to perform when the asynchronous request completes. 
+        /// The 'Action&lt;&gt;' to perform when the asynchronous request completes. 
         /// Provides a list of metadata <see cref="Entry">entries</see> for any matching files and folders.
         /// </param>
         /// <returns>
@@ -808,7 +1069,7 @@ namespace Spring.Social.Dropbox.Api
         /// The Dropbox path to the file or folder you want a sharable link to, relative to root.
         /// </param>
         /// <param name="operationCompleted">
-        /// The <code>Action&lt;&gt;</code> to perform when the asynchronous request completes. 
+        /// The 'Action&lt;&gt;' to perform when the asynchronous request completes. 
         /// Provides a shareable link to the file or folder.
         /// </param>
         /// <returns>
@@ -824,7 +1085,7 @@ namespace Spring.Social.Dropbox.Api
         /// The Dropbox path to the media file you want a direct link to, relative to root.
         /// </param>
         /// <param name="operationCompleted">
-        /// The <code>Action&lt;&gt;</code> to perform when the asynchronous request completes. 
+        /// The 'Action&lt;&gt;' to perform when the asynchronous request completes. 
         /// Provides a direct link to the media file.
         /// </param>
         /// <returns>
@@ -842,7 +1103,7 @@ namespace Spring.Social.Dropbox.Api
         /// <param name="format">The image format of the thumbnail to download.</param>
         /// <param name="size">The size of the thumbnail to download.</param>
         /// <param name="operationCompleted">
-        /// The <code>Action&lt;&gt;</code> to perform when the asynchronous request completes. 
+        /// The 'Action&lt;&gt;' to perform when the asynchronous request completes. 
         /// Provides a <see cref="DropboxFile"/> object containing the thumbnail's content and metadata.
         /// </param>
         /// <returns>

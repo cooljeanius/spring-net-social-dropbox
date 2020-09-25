@@ -55,10 +55,13 @@ namespace Spring.OAuth1ConsoleQuickStart
 
                 // Use step by step debugging, or not             
 /*
+                DeltaPage deltaPage = dropbox.DeltaAsync(null).Result;
                 Entry createFolderEntry = dropbox.CreateFolderAsync("Spring Social").Result;
                 Entry uploadFileEntry = dropbox.UploadFileAsync(
                     new AssemblyResource("assembly://Spring.ConsoleQuickStart/Spring.ConsoleQuickStart/File.txt"),
                     "/Spring Social/File.txt", true, null, CancellationToken.None).Result;
+                FileRef fileRef = dropbox.CreateFileRefAsync("Spring Social/File.txt").Result;
+                Entry copyRefEntry = dropbox.CopyFileRefAsync(fileRef.Value, "Spring Social/File_copy_ref.txt").Result;
                 Entry copyEntry = dropbox.CopyAsync("Spring Social/File.txt", "Spring Social/File_copy.txt").Result;
                 Entry deleteEntry = dropbox.DeleteAsync("Spring Social/File.txt").Result;
                 Entry moveEntry = dropbox.MoveAsync("Spring Social/File_copy.txt", "Spring Social/File.txt").Result;
@@ -136,10 +139,13 @@ namespace Spring.OAuth1ConsoleQuickStart
 
                 // Use step by step debugging, or not
 /*
+                DeltaPage deltaPage = dropbox.Delta(null);
                 Entry createFolderEntry = dropbox.CreateFolder("Spring Social");
                 Entry uploadFileEntry = dropbox.UploadFile(
                     new AssemblyResource("assembly://Spring.ConsoleQuickStart/Spring.ConsoleQuickStart/File.txt"),
                     "/Spring Social/File.txt", true, null);
+                FileRef fileRef = dropbox.CreateFileRef("Spring Social/File.txt");
+                Entry copyRefEntry = dropbox.CopyFileRef(fileRef.Value, "Spring Social/File_copy_ref.txt");
                 Entry copyEntry = dropbox.Copy("Spring Social/File.txt", "Spring Social/File_copy.txt");
                 Entry deleteEntry = dropbox.Delete("Spring Social/File.txt");
                 Entry moveEntry = dropbox.Move("Spring Social/File_copy.txt", "Spring Social/File.txt");
